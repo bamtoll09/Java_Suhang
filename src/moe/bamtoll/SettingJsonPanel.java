@@ -48,6 +48,27 @@ public class SettingJsonPanel extends JPanel implements ActionListener {
                 break;
 
             case "저장":
+                if (!pathTextField.getText().toString().trim().equals("")) {
+                    JsonWriter jsonWriter = new JsonWriter();
+                    for (int i = 0; i < Frame.jsonPanels.size(); i++) {
+                        switch (Frame.jsonPanels.get(i).spinner.getValue().toString())
+                        {
+                            case "int":
+                                jsonWriter.Put(Frame.jsonPanels.get(i).nameTextField.getText().toString(), new Integer(Frame.jsonPanels.get(i).valueTextField.getText().toString()));
+                                break;
+                            case "float":
+                                jsonWriter.Put(Frame.jsonPanels.get(i).nameTextField.getText().toString(), new Float(Frame.jsonPanels.get(i).valueTextField.getText().toString()));
+                                break;
+                            case "String":
+                                jsonWriter.Put(Frame.jsonPanels.get(i).nameTextField.getText().toString(), Frame.jsonPanels.get(i).valueTextField.getText().toString());
+                                break;
+                            case "boolean":
+                                jsonWriter.Put(Frame.jsonPanels.get(i).nameTextField.getText().toString(), new Boolean(Frame.jsonPanels.get(i).valueTextField.getText().toString()));
+                                break;
+                        }
+                    }
+                    jsonWriter.Write(pathTextField.getText().toString().concat(nameTextField.getText().toString()), jsonWriter.jsonObject);
+                }
                 break;
         }
     }
