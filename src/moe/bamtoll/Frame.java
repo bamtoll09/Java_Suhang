@@ -12,7 +12,9 @@ import java.util.ArrayList;
 public class Frame extends JFrame implements ActionListener {
 
     JPanel panel = new JPanel(new FlowLayout());
-    JScrollPane scrollPane = new JScrollPane(panel);
+    JScrollPane scrollPane = new JScrollPane(panel,
+            JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
     SettingJsonPanel settingJsonPanel = new SettingJsonPanel();
     ArrayList<AddJsonPanel> jsonPanels = new ArrayList<>();
 
@@ -31,7 +33,9 @@ public class Frame extends JFrame implements ActionListener {
         panelHeight += 100;
         panel.add(settingJsonPanel);
         scrollPane.setSize(new Dimension(width, height));
-        add(panel);
+        add(scrollPane);
+        setLocationByPlatform(true);
+        pack();
         Add();
         setTitle("XML / JSON Writer");
         setSize(new Dimension(width, height));
@@ -43,6 +47,12 @@ public class Frame extends JFrame implements ActionListener {
     public void Add() {
         jsonPanels.add(new AddJsonPanel());
         jsonPanels.get(index).setBounds(boundX, boundY, width, 100);
+        jsonPanels.get(index).arrayButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AddJsonPanel.arrayOn = true;
+            }
+        });
         jsonPanels.get(index).addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -55,6 +65,16 @@ public class Frame extends JFrame implements ActionListener {
         panel.setSize(width, panelHeight);
         panelHeight += 100;
         index++;
+        if (index > 1) {
+            for (ActionListener al : jsonPanels.get(index - 2).addButton.getActionListeners()) {
+                jsonPanels.get(index - 2).addButton.removeActionListener(al);
+            }
+
+            for (ActionListener al : jsonPanels.get(index - 2).arrayButton.getActionListeners()) {
+                jsonPanels.get(index - 2).arrayButton.removeActionListener(al);
+            }
+        }
+        SwingUtilities.updateComponentTreeUI(this);
     }
 
     @Override
