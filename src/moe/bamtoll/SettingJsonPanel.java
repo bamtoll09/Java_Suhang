@@ -67,6 +67,10 @@ public class SettingJsonPanel extends JPanel implements ActionListener {
                                 break;
                         }
                     }
+                    if (pathTextField.getText().toString().lastIndexOf(0) != '\\')
+                        pathTextField.setText(pathTextField.getText().toString().concat("\\"));
+                    if (!nameTextField.getText().toString().contains(".json"))
+                        nameTextField.setText(nameTextField.getText().toString().concat(".json"));
                     jsonWriter.Write(pathTextField.getText().toString().concat(nameTextField.getText().toString()), jsonWriter.jsonObject);
                 }
                 break;

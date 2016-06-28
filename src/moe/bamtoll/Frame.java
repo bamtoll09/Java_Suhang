@@ -38,11 +38,12 @@ public class Frame extends JFrame implements ActionListener, FrameInterface {
         contentPane.setPreferredSize(new Dimension(width, height));
         contentPane.add(scrollPane);
         setContentPane(contentPane);
+        setIconImage(new ImageIcon("assets/icon/JSON_logo.gif").getImage());
 
         //for (int i=0; i<10; i++)
             Add(index);
         pack();
-        setTitle("XML / JSON Writer");
+        setTitle("JSON Writer");
         setSize(new Dimension(width + 15, height+ 40));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
